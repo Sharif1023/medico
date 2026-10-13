@@ -1,6 +1,16 @@
-> **Current release:** [INTEGRATION_SETTINGS_BN.md](INTEGRATION_SETTINGS_BN.md) is the current cPanel/integration guide. Outgoing mail and inbox credentials are now configured only in Admin Email Settings. Older SMTP/IMAP environment instructions below are historical.
-
 # ShasthoCare — Full-Stack Pharmacy & Healthcare Commerce
+
+## Live Demo
+
+The project is deployed and available online.
+
+🌐 Live Website:
+
+https://medico.sharuu.com
+
+You can visit the above link to check the complete working application, including the customer storefront and administration control center.
+
+---
 
 ShasthoCare is an original JavaScript-only pharmacy and healthcare ecommerce project with a customer storefront and a full administration control center. The UI follows a clean teal/healthcare visual direction while using original branding and assets.
 
@@ -17,105 +27,254 @@ The public site is database/admin driven: brand, logo, favicon, four switchable 
 
 Administration includes dashboard analytics; products and JSON product import; rich-text editing; categories/brands/manufacturers; FEFO batches, stock movement and adjustments; suppliers and purchase orders; orders, payments and refunds; prescriptions; customers; reviews and returns; coupons, banners and newsletter; services and bookings; homepage, navigation/footer, CMS and contact messages; reports; staff, roles/permissions and audit logs; website/admin settings.
 
-## Admin login fix
+## Admin login
 
 Two admin login routes are available:
 
-- Recovery route: `http://localhost:5173/admin/login` — always available.
-- Configurable alias: seeded as `http://localhost:5173/control-center/login`.
+- Recovery route:
+  `http://localhost:5173/admin/login`
 
-The server hydrates the signed-in user's roles and exposes the admin flag only after role verification. Changing the alias never removes the recovery route, so a bad custom slug cannot lock you out.
+- Configurable alias:
+  `http://localhost:5173/control-center/login`
 
-Development Super Admin:
+The server hydrates the signed-in user's roles and exposes the admin flag only after role verification. Changing the alias never removes the recovery route.
 
-- Email: `admin@shasthocare.local`
-- Password: `Admin@12345`
+## Development Super Admin
 
-Development customer:
+Email:
 
-- Email: `customer@example.com`
-- Password: `Customer@12345`
+```
+admin@shasthocare.local
+```
 
-Change development credentials and JWT secrets before production.
+Password:
 
-## Quick start
+```
+Admin@12345
+```
 
-Requirements: Node.js 20+, npm 10+, MySQL 8+.
+## Development Customer
+
+Email:
+
+```
+customer@example.com
+```
+
+Password:
+
+```
+Customer@12345
+```
+
+## Quick Start
+
+Requirements:
+
+- Node.js 20+
+- npm 10+
+- MySQL 8+
+
+Create environment files:
 
 ```powershell
 Copy-Item server\.env.example server\.env
 Copy-Item client\.env.example client\.env
-# Edit server\.env with your real MySQL username/password first.
+```
+
+Configure `server/.env` with your MySQL credentials.
+
+Install dependencies:
+
+```powershell
 npm run install:all
+```
+
+Run database migration:
+
+```powershell
 npm run db:migrate
+```
+
+Load development data:
+
+```powershell
 npm run db:seed
+```
+
+Start the project:
+
+```powershell
 npm run dev
 ```
 
-Storefront: `http://localhost:5173`  
-Admin: `http://localhost:5173/admin/login`  
-API: `http://localhost:5000/api/v1`  
-Health check: `http://localhost:5000/health`
+## Application URLs
 
-`npm run db:seed` is development/demo data. Do not use it casually against a live production database. The seed script refuses to run when `NODE_ENV=production` unless `ALLOW_DEMO_SEED=1` is deliberately set.
+Storefront:
 
-## Product JSON import
+```
+http://localhost:5173
+```
 
-Go to **Admin → Catalog → Products → Add Product → JSON**. You can paste one product, `{ "products": [...] }`, or an array through the API. JSON import supports product content, pricing, flags, remote or existing `/uploads/...` image URLs and initial FEFO batches. For local image files, create/import the product and then use the image uploader to upload the cover and extra images.
+Admin:
 
-See `docs/product-import-example.json` for a complete example.
+```
+http://localhost:5173/admin/login
+```
+
+API:
+
+```
+http://localhost:5000/api/v1
+```
+
+Health Check:
+
+```
+http://localhost:5000/health
+```
+
+## Product JSON Import
+
+Go to:
+
+```
+Admin → Catalog → Products → Add Product → JSON
+```
+
+JSON import supports:
+
+- Product information
+- Pricing
+- Product flags
+- Remote or existing `/uploads/...` image URLs
+- Initial FEFO batches
+
+See:
+
+```
+docs/product-import-example.json
+```
+
+for examples.
 
 ## Verification
 
 After dependencies are installed:
 
-```powershell
+```bash
 npm run verify
 npm run build
 npm test
 ```
 
-`npm run verify` is dependency-free and checks required admin files, routes, themes, rich-text controls and key database tables.
+`npm run verify` checks required admin files, routes, themes, rich-text controls and key database tables.
 
-For detailed setup and admin usage read `SETUP.md` and `docs/ADMIN.md`.
+## Main Features
 
-## September 2026 fixes and additions
+### Customer Features
 
-This build also includes the following reliability and workflow upgrades:
+- User registration and login
+- Product browsing and searching
+- Shopping cart
+- Wishlist
+- Product reviews
+- Address management
+- Prescription upload
+- Order tracking
+- Invoice generation
+- Coupon support
+- Multiple payment methods
 
-- Website theme changes are persisted immediately and public site queries are invalidated/refetched without browser cache. Logo/favicon uploads are also saved immediately.
-- Banner, service, CMS, navigation and other admin resource changes broadcast a storefront refresh. Multiple active `hero` banners are used as a timed hero slideshow.
-- Customer Account now includes a live dashboard plus Profile, Orders/Invoices, Prescriptions, Wishlist, Addresses, Reviews, Returns, Service Bookings and Notifications.
-- Wishlist hearts use an active filled red/rose state on cards and product details.
-- Products support single-unit, strip and box pricing, units-per-strip, strips-per-box, total units-per-box and physical-stock deductions. Medicine forms default to a 20% discount, adjustable per product.
-- bKash/Nagad receiving numbers and rich payment instructions are controlled from Admin → Settings. Customers can submit sender last 4 digits or a transaction ID, and admins can review these values in Payments.
-- A4 printable invoices are available for customer orders and from Admin → Orders. Invoice lines include package type, quantity, physical units, product markdown savings, order/coupon discount, shipping, payment reference and totals.
-- Generic admin CRUD editors and homepage/order editors use full-page layouts instead of narrow drawers.
-- `database/seed.sql` is included alongside the JavaScript seed script.
+### Admin Features
 
-### SQL seed alternative
+- Dashboard analytics
+- Product management
+- Category and brand management
+- Manufacturer management
+- Inventory and FEFO batch management
+- Supplier management
+- Purchase orders
+- Order management
+- Payment and refund management
+- Prescription review
+- Customer management
+- CMS management
+- Banner management
+- Homepage customization
+- Navigation management
+- Staff roles and permissions
+- Audit logs
 
-After migration/schema creation, you may seed using SQL instead of the JavaScript generator:
+## Database Modules
 
-```powershell
-npm run db:seed:sql
+The database includes:
+
+- Users
+- Roles and Permissions
+- Products
+- Categories
+- Brands
+- Manufacturers
+- Inventory
+- Orders
+- Payments
+- Prescriptions
+- Reviews
+- Returns
+- Services
+- CMS Pages
+- Settings
+- Audit Logs
+
+## Project Structure
+
+```
+ShasthoCare
+
+├── client
+│   ├── React Application
+│   ├── Components
+│   ├── Pages
+│   └── State Management
+│
+├── server
+│   ├── Express API
+│   ├── Controllers
+│   ├── Authentication
+│   ├── Database
+│   └── Upload Services
+│
+└── database
+    ├── Schema
+    └── Seed Data
 ```
 
-Or with the MySQL CLI:
+## Security Features
 
-```powershell
-mysql -h 127.0.0.1 -P 3306 -u root -p shasthocare < database\seed.sql
-```
+- JWT based authentication
+- Refresh token rotation
+- Password hashing with bcrypt
+- Role Based Access Control (RBAC)
+- SQL prepared statements
+- Secure file upload handling
+- Private prescription file access
+- Audit logging
 
-`npm run db:seed` remains recommended for the richest local demo because it can also generate local demo SVG assets.
+## Production Notes
 
----
+Before production deployment:
 
-## Medico Full Production Upgrade (September 2026)
+- Change development accounts and secrets
+- Enable HTTPS
+- Configure production database credentials
+- Use persistent storage for uploads
+- Configure real payment credentials
+- Configure email services
+- Setup backups and monitoring
 
-This project includes the secure account/email/admin/order/prescription/address/offer/WhatsApp upgrade. Before live deployment, read **`LIVE_DEPLOYMENT_DATABASE_GUIDE.md`**. For the implementation summary and file list, see **`docs/MEDICO_FULL_UPGRADE.md`**.
+## License
 
+This project was developed as an internship project.
 
-## Corrected integration release
-
-This update is based on medicine(4).zip. Read docs/INTEGRATIONS.md (INTEGRATIONS.md from inside docs) and SETUP_BN.md for current SMTP configuration and migration 003. Existing IMAP/account OTP features are retained. SMTP credentials now belong in Admin Email Settings.
+© 2026 ShasthoCare. All Rights Reserved.
