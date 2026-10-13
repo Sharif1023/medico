@@ -8,6 +8,14 @@ The project is deployed and available online.
 
 https://medico.sharuu.com
 
+Admin login-
+http://localhost:5173/admin/login
+
+Email & Password:
+
+admin@shasthocare.local
+Admin@12345
+
 You can visit the above link to check the complete working application, including the customer storefront and administration control center.
 
 ---
