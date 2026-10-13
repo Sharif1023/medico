@@ -280,9 +280,3 @@ Before production deployment:
 - Configure real payment credentials
 - Configure email services
 - Setup backups and monitoring
-
-## License
-
-This project was developed as an internship project.
-
-© 2026 ShasthoCare. All Rights Reserved.
